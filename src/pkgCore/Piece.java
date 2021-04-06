@@ -1,7 +1,7 @@
 package pkgCore;
 
 public class Piece {
-	private char color;
+	private final char color;
 	
 	public Piece(char c) {
 		color = c;

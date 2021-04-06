@@ -5,14 +5,15 @@ import java.util.Scanner;
 import pkgException.ColumnFullException;
 
 public class Connect4Game {
-
+	
+	private static Board gameBoard = new Board();
+	
 	public static void main(String[] args) {
-		Board gameBoard = new Board();
 		char winner = 0;
 		char currentPlayer = 'X';
 		boolean gameIsRunning = true;
 		while (gameIsRunning) {
-			newMove(currentPlayer,gameBoard);
+			newMove(currentPlayer);
 			winner = gameBoard.isWinning();
 			if (winner != 0) {
 				gameIsRunning = false;
@@ -30,16 +31,16 @@ public class Connect4Game {
 		}
 	}
 	
-	public static void newMove(char player, Board b) {
+	public static void newMove(char player) {
 		Scanner sc = new Scanner(System.in);
 		boolean moveSuccessful = false;
 		while (!moveSuccessful) {
 			moveSuccessful = true;
 			System.out.println(player + " to move:");
-			b.printBoard();
+			gameBoard.printBoard();
 			int column = sc.nextInt();
 			try {
-				b.insertPiece(column, player);
+				gameBoard.insertPiece(column, player);
 			}
 			catch (ColumnFullException e) {
 				System.out.println("column " + e.getColumn() + " is full");
