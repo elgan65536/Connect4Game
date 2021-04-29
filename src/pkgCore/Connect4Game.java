@@ -1,38 +1,30 @@
 package pkgCore;
 
 import java.util.Scanner;
-
 import pkgException.ColumnFullException;
 
 public class Connect4Game {
 	
 	private static Board gameBoard = new Board();
+	static Scanner sc = new Scanner(System.in);
 	
-	public static void main(String[] args) {
+	public static void main(String[] arguments) {
 		char winner = 0;
 		char currentPlayer = 'X';
 		boolean gameIsRunning = true;
 		while (gameIsRunning) {
 			newMove(currentPlayer);
 			winner = gameBoard.isWinning();
-			if (winner != 0) {
-				gameIsRunning = false;
-			}
-			if (gameBoard.isFull()) {
+			if (winner != 0 || gameBoard.isFull()) {
 				gameIsRunning = false;
 			}
 			currentPlayer = swap(currentPlayer);
 		}
 		gameBoard.printBoard();
-		if (winner == 0) {
-			System.out.print("The game is a draw");
-		} else {
-			System.out.print(winner + " wins");
-		}
+		System.out.print((winner == 0) ? "The game is a draw" : winner + " wins");
 	}
 	
 	public static void newMove(char player) {
-		Scanner sc = new Scanner(System.in);
 		boolean moveSuccessful = false;
 		while (!moveSuccessful) {
 			moveSuccessful = true;
@@ -41,12 +33,10 @@ public class Connect4Game {
 			int column = sc.nextInt();
 			try {
 				gameBoard.insertPiece(column, player);
-			}
-			catch (ColumnFullException e) {
+			} catch (ColumnFullException e) {
 				System.out.println("column " + e.getColumn() + " is full");
 				moveSuccessful = false;
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				System.out.println("Invalid move");
 				moveSuccessful = false;
 			}
@@ -54,11 +44,13 @@ public class Connect4Game {
 	}
 	
 	public static char swap(char c) {
-		if (c == 'X') {
-			c = 'O';
-		} else if (c == 'O') {
-			c = 'X';
+		switch (c) {
+		case 'X':
+			return 'O';
+		case 'O':
+			return 'X';
+		default:
+			return 0;
 		}
-		return c;
 	}
 }

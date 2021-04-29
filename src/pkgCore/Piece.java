@@ -11,7 +11,7 @@ public class Piece {
 		return color;
 	}
 	
-	public boolean equals(Piece...pieces) {
+	public boolean equalTo(Piece...pieces) {
 		for (Piece piece : pieces) {
 			if (piece == null) {
 				return false;
